@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Flipkart Shopping Demo</title><link rel="stylesheet" href="css/style.css"></head>
+<body>
+<header><a class="logo" href="#">Flipkart<small>Explore Plus ✦</small></a>
+<div class="search"><span>⌕</span><input id="search" placeholder="Search for products, brands and more"></div>
+<button class="login">Login</button><button id="openCart" class="cart">🛒 Cart <b id="count">0</b></button></header>
+<nav><a href="#products">Top Offers</a><a href="#products">Mobiles</a><a href="#products">Fashion</a><a href="#products">Electronics</a><a href="#products">Home</a><a href="#products">Appliances</a><a href="#products">Beauty</a></nav>
+<main>
+<section class="hero"><div><p class="eyebrow">THE BIG SAVINGS DAYS</p><h1>Good deals.<br><em>Great discoveries.</em></h1><p>Find your next favourite thing at prices you'll love.</p><a href="#products" class="shop">Shop deals →</a></div><div class="hero-art"><div class="circle"></div><div class="bag">🛍️</div><div class="sale">SALE<br><b>UP TO 60% OFF</b></div><div class="float f1">🎧<small>Audio</small></div><div class="float f2">⌚<small>Wearables</small></div></div></section>
+<section class="deal"><strong>⚡ Deals of the day</strong><span>Fresh picks, just for you</span><b>Limited-time offers</b></section>
+<section id="products" class="products"><div class="heading"><div><p class="eyebrow blue">HANDPICKED FOR YOU</p><h2>Popular products</h2></div><select id="sort"><option value="featured">Sort: Featured</option><option value="low">Price: Low to high</option><option value="high">Price: High to low</option><option value="rating">Customer rating</option></select></div>
+<div class="filters"><button class="active" data-filter="all">All products</button><button data-filter="electronics">Electronics</button><button data-filter="fashion">Fashion</button><button data-filter="home">Home</button></div>
+<div id="grid" class="grid"></div><p id="emptySearch" hidden>No products found. Try another search.</p></section>
+<section class="trust"><div>🚚 <b>Fast delivery</b><small>To your doorstep</small></div><div>🔒 <b>Secure payments</b><small>Protected checkout</small></div><div>↩️ <b>Easy returns</b><small>Simple and hassle-free</small></div></section>
+</main><footer><b>Flipkart Plus ✦</b><span>Shopping demo project · HTML, CSS and JavaScript</span></footer>
+<div id="shade" class="shade"></div><aside id="drawer"><div class="drawerhead"><div><p class="eyebrow blue">YOUR BAG</p><h2>Shopping cart <small id="drawerCount">(0)</small></h2></div><button id="closeCart">×</button></div>
+<div id="cartItems"></div><div id="emptyCart" class="empty"><div>🛒</div><h3>Your cart is empty</h3><p>Looks like you haven't added anything yet.</p><button id="continue">Start shopping</button></div>
+<div id="summary" class="summary" hidden><p><span>Subtotal</span><b id="subtotal">₹0</b></p><p><span>Delivery</span><b class="free">FREE</b></p><p class="total"><span>Total</span><b id="total">₹0</b></p><button id="checkout">Place order →</button><small>Demo only — no payment will be collected.</small></div></aside><div id="toast" class="toast"></div>
+<script src="js/app.js"></script></body></html>

@@ -1,0 +1,21 @@
+const products=[
+{id:1,name:'Wireless Bluetooth Headphones',cat:'electronics',emoji:'🎧',price:1499,old:2999,rating:4.4,reviews:'2,341',off:'50% OFF'},
+{id:2,name:'Smart Fitness Watch',cat:'electronics',emoji:'⌚',price:2199,old:4999,rating:4.2,reviews:'1,804',off:'56% OFF'},
+{id:3,name:'Classic Everyday Sneakers',cat:'fashion',emoji:'👟',price:1299,old:2499,rating:4.3,reviews:'986',off:'48% OFF'},
+{id:4,name:'Premium Travel Backpack',cat:'fashion',emoji:'🎒',price:899,old:1799,rating:4.1,reviews:'752',off:'50% OFF'},
+{id:5,name:'Portable Bluetooth Speaker',cat:'electronics',emoji:'🔊',price:1799,old:3499,rating:4.5,reviews:'1,120',off:'49% OFF'},
+{id:6,name:'Minimal Desk Lamp',cat:'home',emoji:'💡',price:699,old:1199,rating:4.0,reviews:'534',off:'42% OFF'},
+{id:7,name:'Stainless Steel Bottle',cat:'home',emoji:'🧴',price:399,old:799,rating:4.2,reviews:'2,010',off:'50% OFF'},
+{id:8,name:'Instant Print Camera',cat:'electronics',emoji:'📸',price:4599,old:6999,rating:4.6,reviews:'628',off:'34% OFF'}];
+let cart=[],filter='all';const $=id=>document.getElementById(id),money=n=>'₹'+n.toLocaleString('en-IN');
+function renderProducts(){let q=$('search').value.toLowerCase().trim(),list=products.filter(p=>(filter==='all'||p.cat===filter)&&p.name.toLowerCase().includes(q)),s=$('sort').value;if(s==='low')list.sort((a,b)=>a.price-b.price);if(s==='high')list.sort((a,b)=>b.price-a.price);if(s==='rating')list.sort((a,b)=>b.rating-a.rating);
+$('grid').innerHTML=list.map(p=>`<article class="product"><div class="photo"><span class="discount">${p.off}</span>${p.emoji}</div><div class="info"><h3>${p.name}</h3><span class="rating">★ ${p.rating}</span><span class="reviews">(${p.reviews})</span><div class="prices"><span class="price">${money(p.price)}</span><span class="old">${money(p.old)}</span></div><button class="add" data-add="${p.id}">＋ Add to cart</button></div></article>`).join('');$('emptySearch').hidden=list.length>0;}
+function renderCart(){let count=cart.reduce((s,p)=>s+p.qty,0),total=cart.reduce((s,p)=>s+p.qty*p.price,0);$('count').textContent=count;$('drawerCount').textContent=`(${count})`;$('emptyCart').hidden=count>0;$('summary').hidden=count===0;$('cartItems').innerHTML=cart.map(p=>`<div class="cartrow"><div class="thumb">${p.emoji}</div><div><h4>${p.name}</h4><span class="unit">${money(p.price)}</span><div class="qty"><button data-qty="${p.id}" data-delta="-1">−</button><b>${p.qty}</b><button data-qty="${p.id}" data-delta="1">＋</button></div><button class="remove" data-remove="${p.id}">Remove</button></div><b>${money(p.price*p.qty)}</b></div>`).join('');$('subtotal').textContent=money(total);$('total').textContent=money(total);}
+function toast(msg){$('toast').textContent=msg;$('toast').classList.add('show');clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>$('toast').classList.remove('show'),2200)}
+function add(id){let p=cart.find(x=>x.id===id);if(p)p.qty++;else cart.push({...products.find(x=>x.id===id),qty:1});renderCart();toast('Product added to your cart');}
+function open(){ $('drawer').classList.add('open');$('shade').classList.add('show');}
+function close(){ $('drawer').classList.remove('open');$('shade').classList.remove('show');}
+$('grid').addEventListener('click',e=>{let b=e.target.closest('[data-add]');if(b)add(+b.dataset.add)});
+$('cartItems').addEventListener('click',e=>{let q=e.target.closest('[data-qty]'),r=e.target.closest('[data-remove]');if(q){let p=cart.find(x=>x.id===+q.dataset.qty);p.qty+=+q.dataset.delta;if(p.qty<1)cart=cart.filter(x=>x.id!==p.id);renderCart()}if(r){cart=cart.filter(x=>x.id!==+r.dataset.remove);renderCart()}});
+document.querySelectorAll('[data-filter]').forEach(b=>b.addEventListener('click',()=>{document.querySelector('.filters .active').classList.remove('active');b.classList.add('active');filter=b.dataset.filter;renderProducts()}));
+$('search').addEventListener('input',renderProducts);$('sort').addEventListener('change',renderProducts);$('openCart').onclick=open;$('closeCart').onclick=close;$('continue').onclick=close;$('shade').onclick=close;document.addEventListener('keydown',e=>{if(e.key==='Escape')close()});$('checkout').onclick=()=>toast('Demo checkout — connect a payment gateway to accept orders.');renderProducts();renderCart();
